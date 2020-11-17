@@ -120,18 +120,14 @@ class HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('TicTacToe'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          this.resetgame();
-        },
-        child: Icon(Icons.refresh),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Padding(padding: EdgeInsets.all(10)),
           Expanded(
             child: GridView.builder(
+              padding: EdgeInsets.all(10),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio: 1.0,
@@ -153,11 +149,32 @@ class HomePageState extends State<HomePage> {
           Container(
             child: Text(
               this.message,
-              style: TextStyle(
-                fontSize: 40,
+              style: TextStyle(fontSize: 50, color: Colors.deepOrange),
+            ),
+          ),
+          Padding(padding: EdgeInsets.all(10)),
+          Container(
+            margin: EdgeInsets.only(left: 20, right: 20),
+            child: MaterialButton(
+              color: Colors.deepOrange,
+              minWidth: 300.0,
+              height: 50,
+              onPressed: () {
+                this.resetgame();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Restart ",
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  Icon(Icons.refresh),
+                ],
               ),
             ),
-          )
+          ),
+          Padding(padding: EdgeInsets.all(10)),
         ],
       ),
     );
