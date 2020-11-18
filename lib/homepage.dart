@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class HomePageState extends State<HomePage> {
   bool isCross = true;
   String message;
   List<String> gamestate;
+  int _start = 5;
 
   //TODO: initialize the state of box with empty
   void initState() {
@@ -33,6 +35,28 @@ class HomePageState extends State<HomePage> {
       ];
       this.message = '';
     });
+  }
+
+  Timer _timer;
+
+  void startTimer() {
+    const onesec = const Duration(seconds: 1);
+    _timer = Timer.periodic(
+        onesec,
+        (Timer timer) => setState(() {
+              if (_start == 0) {
+                timer.cancel();
+                resetgame();
+                _start = 5;
+              } else {
+                _start = _start - 1;
+              }
+            }));
+  }
+
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   //TODO: playgame method
@@ -54,32 +78,43 @@ class HomePageState extends State<HomePage> {
     if ((gamestate[0] != 'empty') &&
         (gamestate[0] == gamestate[1] && (gamestate[0] == gamestate[2]))) {
       this.message = '${this.gamestate[0]} wins';
+      startTimer();
     } else if ((gamestate[0] != 'empty') &&
         (gamestate[0] == gamestate[3] && (gamestate[0] == gamestate[6]))) {
       this.message = '${this.gamestate[0]} wins';
+      startTimer();
     } else if ((gamestate[0] != 'empty') &&
         (gamestate[0] == gamestate[4] && (gamestate[0] == gamestate[8]))) {
       this.message = '${this.gamestate[0]} wins';
+      startTimer();
     } else if ((gamestate[1] != 'empty') &&
         (gamestate[1] == gamestate[4] && (gamestate[1] == gamestate[7]))) {
       this.message = '${this.gamestate[1]} wins';
+      startTimer();
     } else if ((gamestate[2] != 'empty') &&
         (gamestate[2] == gamestate[4] && (gamestate[2] == gamestate[6]))) {
       this.message = '${this.gamestate[2]} wins';
+      startTimer();
     } else if ((gamestate[2] != 'empty') &&
         (gamestate[2] == gamestate[5] && (gamestate[2] == gamestate[8]))) {
       this.message = '${this.gamestate[2]} wins';
+      startTimer();
     } else if ((gamestate[3] != 'empty') &&
         (gamestate[3] == gamestate[4] && (gamestate[3] == gamestate[5]))) {
       this.message = '${this.gamestate[3]} wins';
+      startTimer();
     } else if ((gamestate[6] != 'empty') &&
         (gamestate[6] == gamestate[7] && (gamestate[7] == gamestate[8]))) {
       this.message = '${this.gamestate[6]} wins';
+      startTimer();
+    } else if (!gamestate.contains('empty')) {
+      this.message = "match draw";
+      startTimer();
     }
   }
 
   playgame(int index) {
-    if (this.gamestate[index] == 'empty') {
+    if (this.gamestate[index] == 'empty' && this.message == '') {
       setState(() {
         if (isCross == true) {
           this.gamestate[index] = 'cross';
@@ -165,10 +200,15 @@ class HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Restart ",
-                    style: TextStyle(fontSize: 30),
-                  ),
+                  (this.message == '')
+                      ? Text(
+                          "Restart ",
+                          style: TextStyle(fontSize: 20),
+                        )
+                      : Text(
+                          "Restarting in $_start sec. ",
+                          style: TextStyle(fontSize: 20),
+                        ),
                   Icon(Icons.refresh),
                 ],
               ),
