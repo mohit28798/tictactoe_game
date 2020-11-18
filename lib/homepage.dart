@@ -154,6 +154,13 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.deepOrange, Colors.redAccent])),
+        ),
         title: Text('TicTacToe'),
       ),
       body: Column(
@@ -165,12 +172,14 @@ class HomePageState extends State<HomePage> {
             child: GridView.builder(
               padding: EdgeInsets.all(10),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 1.0,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0),
+                crossAxisCount: 3,
+                childAspectRatio: 1.0,
+              ),
               itemCount: 9,
-              itemBuilder: (context, i) => SizedBox(
+              itemBuilder: (context, i) => Container(
+                decoration: BoxDecoration(
+                    border:
+                        Border.all(color: Colors.deepOrangeAccent, width: 2)),
                 width: 100.0,
                 height: 100.0,
                 child: MaterialButton(
@@ -185,14 +194,16 @@ class HomePageState extends State<HomePage> {
           Container(
             child: Text(
               this.message,
-              style: TextStyle(fontSize: 50, color: Colors.grey),
+              style: TextStyle(fontSize: 50, color: Colors.deepOrangeAccent),
             ),
           ),
           Padding(padding: EdgeInsets.all(10)),
           Container(
+            decoration: BoxDecoration(
+                gradient:
+                    LinearGradient(colors: [Colors.deepOrange, Colors.red])),
             margin: EdgeInsets.only(left: 20, right: 20),
             child: MaterialButton(
-              color: Colors.redAccent,
               minWidth: 300.0,
               height: 50,
               onPressed: () {
@@ -204,13 +215,22 @@ class HomePageState extends State<HomePage> {
                   (this.message == '')
                       ? Text(
                           "Restart ",
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         )
                       : Text(
                           "Restarting in $_start sec. ",
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         ),
-                  Icon(Icons.refresh),
+                  Icon(
+                    Icons.refresh,
+                    color: Colors.white,
+                  ),
                 ],
               ),
             ),
