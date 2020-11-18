@@ -153,6 +153,7 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('TicTacToe'),
       ),
       body: Column(
@@ -184,14 +185,14 @@ class HomePageState extends State<HomePage> {
           Container(
             child: Text(
               this.message,
-              style: TextStyle(fontSize: 50, color: Colors.deepOrange),
+              style: TextStyle(fontSize: 50, color: Colors.grey),
             ),
           ),
           Padding(padding: EdgeInsets.all(10)),
           Container(
             margin: EdgeInsets.only(left: 20, right: 20),
             child: MaterialButton(
-              color: Colors.deepOrange,
+              color: Colors.redAccent,
               minWidth: 300.0,
               height: 50,
               onPressed: () {
